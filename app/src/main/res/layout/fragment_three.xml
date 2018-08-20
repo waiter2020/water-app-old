@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/btn_changeHead"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="18dp"
+        android:clickable="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:paddingBottom="8dp"
+        android:paddingTop="15dp"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/default_useravatar"
+            android:contentDescription="TODO" />
+
+        <LinearLayout
+            android:id="@+id/ll_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/iv_head"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_myname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*********"
+                android:textColor="#353535"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_sex"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_sex_male" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/re_usewater"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:background="@drawable/btn_list_item_bg"-->
+        <!--android:clickable="true"-->
+        <!--android:paddingLeft="12dp" >-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_usewater"-->
+            <!--android:layout_width="24dp"-->
+            <!--android:layout_height="24dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:src="@drawable/ake" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_usewater"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_toRightOf="@id/iv_usewater"-->
+            <!--android:text="@string/water_info"-->
+            <!--android:textColor="#353535"-->
+            <!--android:textSize="16sp" />-->
+    <!--</RelativeLayout>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/btn_list_item_bg"
+        android:clickable="true"
+        android:paddingLeft="12dp" >
+
+
+
+        <Button
+            android:id="@+id/exit_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/exit_account"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</LinearLayout>

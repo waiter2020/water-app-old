@@ -1,0 +1,78 @@
+<resources>
+    <string-array name="songs">
+        <item>没有人</item>
+        <item>我的快乐时代</item>
+        <item>黄金时代</item>
+        <item>习惯失恋</item>
+        <item>你来自哪颗星</item>
+    </string-array>
+    <string name="app_name">Water</string>
+    <string name="username">用户名</string>
+    <string name="passwd">密码</string>
+    <string name="login">登录</string>
+    <string name="name">Name</string>
+    <string name="textview">TextView</string>
+    <string name="reg">注册</string>
+    <string name="remember">记住我</string>
+    <string name="email">邮箱</string>
+    <string name="phone">电话</string>
+    <string name="passwd2">重复密码</string>
+    <string name="passwd2_tip">请再输一次密码</string>
+    <string name="passwd_tip">请输入密码</string>
+    <string name="phone_tip">请输入电话号码</string>
+    <string name="email_tip">请输入邮箱，如：123@qq.com</string>
+    <string name="username_tip">字母开头，允许5-16字节，允许字母数字下划线</string>
+    <string name="auto_login">自动登录</string>
+    <string name="ip">服务器IP</string>
+    <string name="todo">TODO</string>
+    <string name="user_info">个人信息</string>
+    <string name="my_drvier">我的设备</string>
+    <string name="water_info">用水状况</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="exit_account">退出当前账号</string>
+    <string name="add_equip">添加设备</string>
+    <string name="add_user">添加成员</string>
+    <string name="setting">设置</string>
+    <string name="create_family">创建家庭组</string>
+    <string name="change_equip">修改阈值</string>
+    <string name="swith">开关阀门</string>
+    <string name="restart">重启</string>
+    <string name="get_data">信息上传</string>
+    <string name="water_user">总用水量</string>
+    <string name="thresholdType">阈值类型</string>
+    <string name="thresholdValue">阈值</string>
+    <string name="model">检漏模式</string>
+    <string name="isOnLine">状态</string>
+    <string name="electricity">电量</string>
+    <string name="delete_equip">解绑设备</string>
+    <string name="change_threshold">修改阈值</string>
+    <string name="change_model">修改检漏模式</string>
+    <string name="equip_id">编号</string>
+    <string name="equipid_name">名称</string>
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="water_condition">用水信息</string>
+    <string name="select">查询</string>
+    <string name="top">首页</string>
+    <string name="previous">上一页</string>
+    <string name="next">下一页</string>
+    <string name="end">末页</string>
+    <string name="go_to">跳转</string>
+    <string name="delete_user">移出家庭组</string>
+    <string name="remove_family">解散家庭组</string>
+    <string name="exit_family">退出家庭组</string>
+    <string name="birth">生日</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="change_user">修改</string>
+    <string name="save">保存</string>
+    <string name="new_passwd">新密码</string>
+    <string name="old_passwd">旧密码</string>
+    <string name="old_passwd_tip">请输入原密码</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="update">检查更新</string>
+    <string name="about">关于</string>
+
+
+</resources>

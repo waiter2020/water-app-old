@@ -1,0 +1,28 @@
+<resources >
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#2e8abb</item> <!--浅蓝色-->
+        <item name="colorPrimaryDark">#3A5FCD</item> <!--深蓝色-->
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="MyDialog"
+        parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="main_tab_bottom" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">10.0dip</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+
+        <item name="android:paddingTop">1.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">1.0dip</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+</resources>

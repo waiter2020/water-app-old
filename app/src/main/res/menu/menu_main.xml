@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/add_equip"
+        android:title="@string/add_equip"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/add_user"
+        android:title="@string/add_user"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/remove_family"
+        android:title="@string/remove_family"
+        app:showAsAction="never"/>
+    <item android:id="@+id/exit_family"
+        android:title="@string/exit_family"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/setting"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+</menu>
