@@ -4,9 +4,11 @@ package pub.upc.dc.water;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 import pub.upc.dc.water.bean.EquipmentInfo;
 import pub.upc.dc.water.bean.Family;
 import pub.upc.dc.water.bean.User;
@@ -36,6 +42,8 @@ import pub.upc.dc.water.fragment.MyThreeRecyclerViewAdapter;
 import pub.upc.dc.water.fragment.MyTowRecyclerViewAdapter;
 import pub.upc.dc.water.fragment.ThreeFragment;
 import pub.upc.dc.water.fragment.TowFragment;
+import pub.upc.dc.water.jpush.ExampleUtil;
+import pub.upc.dc.water.jpush.LocalBroadcastManager;
 import pub.upc.dc.water.utils.Action;
 import pub.upc.dc.water.widget.BadgeRadioButton;
 
@@ -73,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 initView();
                 initRecyclerView();
                 initData();
+                registerMessageReceiver();
+                init();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -456,5 +466,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
+
+
+    // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
+    private void init(){
+        JPushInterface.init(getApplicationContext());
+        Set<String> strings = new HashSet<>();
+        strings.add(String.valueOf(AppData.getUser().getFamily().getId()));
+        JPushInterface.setTags(context,AppData.getUser().getId(),strings);
+    }
+
+    public static boolean isForeground = false;
+
+    @Override
+    protected void onResume() {
+        isForeground = true;
+        super.onResume();
+        JPushInterface.onResume(MainActivity.this);
+    }
+
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+        JPushInterface.onPause(MainActivity.this);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
+    }
+
+
+    //for receive customer msg from jpush server
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "pub.upc.dc.water.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                    String messge = intent.getStringExtra(KEY_MESSAGE);
+                    String extras = intent.getStringExtra(KEY_EXTRAS);
+                    StringBuilder showMsg = new StringBuilder();
+                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    if (!ExampleUtil.isEmpty(extras)) {
+                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                    }
+                    setCostomMsg(showMsg.toString());
+                }
+            } catch (Exception e){
+            }
+        }
+    }
+
+    private void setCostomMsg(String msg){
+       Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+    }
+
 
 }

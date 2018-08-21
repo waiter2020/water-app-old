@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,9 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import cn.jpush.android.api.JPushInterface;
 import pub.upc.dc.water.bean.EquipmentInfo;
 import pub.upc.dc.water.bean.Family;
 import pub.upc.dc.water.data.AppData;
@@ -68,6 +74,7 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
         initData();
         initView();
         showData();
+        setTimer();
     }
 
     private void initView(){
@@ -116,16 +123,26 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void initData(){
+    public void initData(){
         context=this;
         if(equipmentInfo==null) {
             Intent intent = getIntent();
             equipmentInfo = (EquipmentInfo) intent.getSerializableExtra("item");
         }
-        equipmentInfo = Action.getEquipInfoById(equipmentInfo.getEquipId(),context);
+        if(equipmentInfo==null){
+            Bundle bundle = getIntent().getExtras();
+            String string1 = bundle.getString(JPushInterface.EXTRA_ALERT);
+            String substring = string1.substring(string1.indexOf("：")+1, string1.indexOf(";"));
+            System.out.println(substring);
+            equipmentInfo = Action.getEquipInfoById(substring, context);
+        }else {
+            equipmentInfo = Action.getEquipInfoById(equipmentInfo.getEquipId(), context);
+        }
+
+
     }
 
-    private void showData(){
+    public void showData(){
         equipId.setText(String.valueOf(equipmentInfo.getEquipId()));
         equipName.setText(String.valueOf(equipmentInfo.getName()));
         waterUsage.setText(String.valueOf(equipmentInfo.getWaterUsage()));
@@ -400,6 +417,51 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("isChange",isChange);
         setResult(1,intent);
         super.onBackPressed();
+    }
+
+
+    private boolean flag=true;
+    private void setTimer(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (flag){
+                    try {
+                        Thread.sleep(1000*60/2); //休眠30秒
+                        mHanler.sendEmptyMessage(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private Handler mHanler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    //去执行定时操作逻辑
+                    initData();
+                    showData();
+                    System.out.println("emmmmmmmmmm");
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void stopTimer(){
+        flag = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
     }
 
 }
