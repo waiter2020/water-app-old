@@ -194,4 +194,7 @@ public class SettingActivity extends InstrumentedActivity implements OnClickList
 		mFriday.setChecked(isChecked);
 		mSaturday.setChecked(isChecked);
 	}
+
+
+
 }

@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.DEVICE_POWER"/>
     <permission
         android:name="pub.upc.dc.water.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -189,6 +190,24 @@
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <meta-data android:name="JPUSH_APPKEY" android:value="d7829e5212fa4e65d461ba5b" /> <!--  </>值来自开发者平台取得的AppKey-->
 
+
+        <provider
+
+            android:name="android.support.v4.content.FileProvider"
+
+            android:authorities="pub.upc.dc.water.fileProvider"
+
+            android:grantUriPermissions="true"
+
+            android:exported="false">
+
+            <meta-data
+
+                android:name="android.support.FILE_PROVIDER_PATHS"
+
+                android:resource="@xml/file_paths"/>
+
+        </provider>
     </application>
 
 </manifest>

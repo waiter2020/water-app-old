@@ -49,6 +49,12 @@ import pub.upc.dc.water.widget.BadgeRadioButton;
 
 import static pub.upc.dc.water.R.id.frame_layout;
 
+
+/**
+ *  当前这个app还有很多不足之处，还望各位大展身手
+ *  by waiter
+ *  2018-09-07
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private MyItemRecyclerViewAdapter myItemRecyclerViewAdapter;
@@ -73,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             setContentView(R.layout.activity_main);
 
             context = this;
-
+            /**
+             * 检查登录状态
+             */
             if (AppData.getToken() == null || "".equals(AppData.getToken())) {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
@@ -115,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * 显示第一个选项卡
+     */
     private void initRecyclerView() {
         toolbar.setTitle("设备列表");
 
@@ -143,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myItemRecyclerViewAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 显示第二个选项卡
+     */
     private void initTwoView() {
         if(AppData.getUser().getFamily()!=null){
             toolbar.setTitle(String.valueOf(AppData.getUser().getFamily().getFamilyName()));
@@ -166,6 +180,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         myTowRecyclerViewAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 显示第三个选项卡
+     */
     private void initThreeView() {
         toolbar.setTitle("个人信息");
         createFamily.setVisibility(View.GONE);
@@ -186,6 +203,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * 获得用户信息
+     */
     private void initData() {
         Action.getUserInfo(this);
     }
@@ -306,6 +326,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
+    /**
+     * 菜单监听
+     */
     Toolbar.OnMenuItemClickListener tooBarListener =new Toolbar.OnMenuItemClickListener(){
 
      @Override

@@ -31,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        /**
+         * 如果已经登录就进入主界面
+         */
         if (AppData.getToken()!=null&&!"".equals(AppData.getToken())){
             startActivity(new Intent(this, MainActivity.class));
             finish();
@@ -53,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
 
+        /**
+         * 如果之前记住密码，填充账号
+         */
         if (sharedPreferences.getBoolean("remember",false)){
             username.setText(sharedPreferences.getString("username",""));
             username.setSelection(sharedPreferences.getString("username","").length());
@@ -62,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
                 autoLogin.setChecked(true);
             }
 
+            /**
+             * 自动登录
+             */
             if (sharedPreferences.getBoolean("autoLogin",false)&&getIntent().getBooleanExtra("auto_login",true)){
                 onBtn_loginClick(null);
             }

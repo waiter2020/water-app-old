@@ -93,6 +93,7 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
 
         changeModel = (Button) findViewById(R.id.change_model);
         equipName= (TextView) findViewById(R.id.equip_name_);
+        equipName.setOnClickListener(this);
         equipId = (TextView) findViewById(R.id.equip_id_);
 
         aSwitch.setOnClickListener(this);
@@ -290,6 +291,10 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         isChange=true;
         String s=null;
+
+        LayoutInflater from = LayoutInflater.from(this);
+        final View inflate = from.inflate(R.layout.input, null);
+
         switch (v.getId()){
             case R.id.switch_equip:
                  s = Action.openOrCloseEquip(equipmentInfo.getEquipId(), context);
@@ -356,8 +361,6 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
                 });
 
 
-                LayoutInflater from = LayoutInflater.from(this);
-                final View inflate = from.inflate(R.layout.input, null);
 
                 final TextView viewById = (TextView) inflate.findViewById(R.id.tip);
                 viewById.setText("请输入阈值");
@@ -406,6 +409,33 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(context, WaterConditionActivity.class);
                 intent.putExtra("equip",equipmentInfo);
                 startActivity(intent);
+                break;
+            case R.id.equip_name_:
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(this).setView(inflate);
+                builder2.setTitle("请输入设备名称");
+                builder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText input = (EditText)inflate.findViewById(R.id.input);
+                        Editable text = input.getText();
+                        if ("".equals(text.toString())){
+                            Toast.makeText(getApplicationContext(),"请输入有效数据",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        String s1 = Action.changeNameEquip(equipmentInfo.getEquipId(), text.toString(), context);
+                        Toast.makeText(context,s1,Toast.LENGTH_LONG).show();
+                        initData();
+                        showData();
+                    }
+                });
+                builder2.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder2.create();
+                builder2.show();
                 break;
         }
     }

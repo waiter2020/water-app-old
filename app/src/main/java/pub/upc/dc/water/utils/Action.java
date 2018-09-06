@@ -16,12 +16,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import cn.jpush.android.api.JPushInterface;
 import pub.upc.dc.water.LoginActivity;
 import pub.upc.dc.water.bean.EquipmentInfo;
 import pub.upc.dc.water.bean.Family;
@@ -33,6 +35,7 @@ import pub.upc.dc.water.data.AppData;
 import pub.upc.dc.water.data.EquipmentInfoContent;
 import pub.upc.dc.water.data.PageBean;
 import pub.upc.dc.water.data.UserContent;
+import pub.upc.dc.water.update.UpdateInfo;
 
 public class Action {
     private static Properties props;
@@ -168,6 +171,14 @@ public class Action {
         return HttpUtils.post(map,url);
     }
 
+    public static String changeNameEquip(String equipId,String name,Context context){
+        String url = props.getProperty("server") + props.getProperty("equip_change_name");
+        Map<String,Object> map = new HashMap<>();
+        map.put("equipId",equipId);
+        map.put("name",name);
+        return HttpUtils.post(map,url);
+    }
+
     public static String changeThresholdEquip(Map<String,Object> map,Context context){
         String url = props.getProperty("server") + props.getProperty("equip_change_threshold");
         return HttpUtils.post(map,url);
@@ -270,6 +281,7 @@ public class Action {
 
 
     public static void logout(Context context) {
+        JPushInterface.setTags(context,AppData.getUser().getId(),new HashSet<String>());
         AppData.setUser(null);
         AppData.setToken(null);
         UserContent.setITEMS(new ArrayList<User>());
@@ -280,4 +292,20 @@ public class Action {
         Activity activity = (Activity) context;
         activity.finish();
     }
+
+
+    public static UpdateInfo update(Context context){
+        String url = props.getProperty("server") + props.getProperty("app_update");
+        String post = HttpUtils.get(null, url);
+        UpdateInfo updateInfo=null;
+        try {
+            updateInfo= gson.fromJson(post, UpdateInfo.class);
+        } catch (Exception e) {
+            Toast.makeText(context, "网络异常", Toast.LENGTH_LONG).show();
+        }
+        return updateInfo;
+    }
+
+
+
 }
