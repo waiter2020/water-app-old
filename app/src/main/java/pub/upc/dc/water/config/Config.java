@@ -8,6 +8,11 @@ import java.util.Properties;
 public  class Config {
     private static Properties props;
 
+    /**
+     * 读取配置文件
+     * @param context
+     * @return
+     */
     public static Properties getProps(Context context) {
         if (props==null){
             // 给props进行初始化，

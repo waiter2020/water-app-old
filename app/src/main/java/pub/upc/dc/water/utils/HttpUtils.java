@@ -21,6 +21,9 @@ import okhttp3.Response;
 import pub.upc.dc.water.config.Config;
 import pub.upc.dc.water.data.AppData;
 
+/**
+ * http请求工具
+ */
 public class HttpUtils {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");

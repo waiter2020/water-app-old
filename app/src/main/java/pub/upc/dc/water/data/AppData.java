@@ -5,7 +5,13 @@ import pub.upc.dc.water.bean.User;
 
 public class AppData {
 
+    /**
+     * 认证token
+     */
     private static String token;
+    /**
+     * 用户信息
+     */
     private static User user;
 
     public static String getToken() {
