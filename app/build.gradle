@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+buildscript {
+    repositories {
+        mavenCentral() // or jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'   //last version Jan 2016
+    }
+}
 android {
     compileSdkVersion 27
     defaultConfig {
