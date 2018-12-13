@@ -49,7 +49,7 @@ public class EquipmentInfo implements Serializable {
 	private Date endStateTime;
 
     private boolean lowQuantityOfElectricity;
-
+    private Boolean lock;
 	/**
 	 * 标明此表属于哪个家庭
 	 */
@@ -221,5 +221,13 @@ public class EquipmentInfo implements Serializable {
 
     public void setFamily(Family family) {
         this.family = family;
+    }
+
+    public Boolean getLock() {
+        return lock;
+    }
+
+    public void setLock(Boolean lock) {
+        this.lock = lock;
     }
 }

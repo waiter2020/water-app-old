@@ -45,12 +45,8 @@ public class MyWaterConditionRecyclerViewAdapter extends RecyclerView.Adapter<My
         holder.startTime.setText(simpleDateFormat.format(mValues.get(position).getStartDate()));
         holder.endTime.setText(simpleDateFormat.format(mValues.get(position).getEndDate()));
 
-        long hour,minute,second;
-        second = mValues.get(position).getTimeUse();
-        hour = second/3600;
-        minute = (second - hour*3600)/60;
-        second = second-hour*300-minute*60;
-        holder.timeUse.setText(hour+"小时"+minute+"分"+second+"秒");
+
+        holder.timeUse.setText(getTime(mValues.get(position).getTimeUse()));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +59,24 @@ public class MyWaterConditionRecyclerViewAdapter extends RecyclerView.Adapter<My
             }
         });
     }
+
+    private String getTime(Long s){
+        long hour,minute;
+        s/=1000;
+        hour = s/3600;
+        minute = (s - hour*3600)/60;
+        s = s-hour*300-minute*60;
+        String time="";
+        if (hour>0){
+            time=hour+"小时"+minute+"分"+s+"秒";
+        }else if (minute>0){
+            time=minute+"分"+s+"秒";
+        }else {
+            time=s+"秒";
+        }
+        return time;
+    }
+
 
     @Override
     public int getItemCount() {

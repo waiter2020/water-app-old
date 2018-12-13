@@ -146,21 +146,26 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
     public void showData(){
         equipId.setText(String.valueOf(equipmentInfo.getEquipId()));
         equipName.setText(String.valueOf(equipmentInfo.getName()));
-        waterUsage.setText(String.valueOf(equipmentInfo.getWaterUsage()));
-        if (equipmentInfo.getThresholdType()==0){
+        waterUsage.setText(String.format("%.1f",equipmentInfo.getWaterUsage()));
+        if (equipmentInfo.getThresholdType()==1){
             thresholdType.setText("时间");
         }else {
             thresholdType.setText("流量");
         }
 
         thresholdValue.setText(String.valueOf(equipmentInfo.getThresholdValue()));
-
+        threshold.setClickable(true);
+        thresholdType.setVisibility(View.VISIBLE);
+        thresholdValue.setVisibility(View.VISIBLE);
         switch (equipmentInfo.getModel()){
             case 0:
                 model.setText("大漏失、小漏失都检测");
                 break;
             case 1:
                 model.setText("只检测小漏");
+                threshold.setClickable(false);
+                thresholdType.setVisibility(View.INVISIBLE);
+                thresholdValue.setVisibility(View.INVISIBLE);
                 break;
             case 2:
                 model.setText("只检测大漏失");
@@ -171,8 +176,10 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (equipmentInfo.isOnline()){
-            if(!equipmentInfo.isOpen()&&equipmentInfo.getEquipState()!=1&&equipmentInfo.getEquipState()!=2){
-                equipState.setText("关总阀");
+            if(!equipmentInfo.isOpen()&&equipmentInfo.getEquipState()!=1&&equipmentInfo.getEquipState()!=2&&equipmentInfo.getLock()){
+                equipState.setText("禁止用水");
+            }else if (!equipmentInfo.isOpen()&&equipmentInfo.getEquipState()!=1&&equipmentInfo.getEquipState()!=2){
+                equipState.setText("阀门关闭");
             }else {
                 switch (equipmentInfo.getEquipState()){
                     case 0:
@@ -206,12 +213,19 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
         if (equipmentInfo.isOnline()){
             restart.setClickable(true);
             getData.setClickable(true);
-            aSwitch.setClickable(true);
+            if (AppData.getUser().getAuthorities().toString().contains("ADMIN")){
+                aSwitch.setClickable(true);
+            }else {
+                aSwitch.setClickable(false);
+            }
         }else {
             restart.setClickable(false);
             getData.setClickable(false);
             aSwitch.setClickable(false);
         }
+
+
+
     }
 
     @Override
@@ -341,7 +355,7 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
             case R.id.threshold:
                 final AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                 builder1.setTitle("请选择阈值类型");
-                final String[] type = { "时间","流量"};
+                final String[] type = { "流量","时间"};
                 final int[] t = new int[1];
                 t[0]=0;
                 //    设置一个单项选择下拉框
