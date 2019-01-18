@@ -146,7 +146,7 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
     public void showData(){
         equipId.setText(String.valueOf(equipmentInfo.getEquipId()));
         equipName.setText(String.valueOf(equipmentInfo.getName()));
-        waterUsage.setText(String.format("%.1f",equipmentInfo.getWaterUsage()));
+        waterUsage.setText(String.format("%.1f",equipmentInfo.getWaterUsage())+"L");
         if (equipmentInfo.getThresholdType()==1){
             thresholdType.setText("时间");
         }else {
@@ -169,9 +169,13 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case 2:
                 model.setText("只检测大漏失");
+
                 break;
             case 3:
                 model.setText("大小漏失都不检测");
+                threshold.setClickable(false);
+                thresholdType.setVisibility(View.INVISIBLE);
+                thresholdValue.setVisibility(View.INVISIBLE);
                 break;
         }
 
@@ -186,14 +190,27 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
                         equipState.setText("正常");
                         break;
                     case 1:
-                        equipState.setText("小漏失");
+                        if (equipmentInfo.getModel()<2) {
+                            equipState.setText("小漏失");
+                        }else {
+                            equipState.setText("正常");
+                        }
                         break;
                     case 2:
-                        equipState.setText("大漏失");
+                        if (equipmentInfo.getModel()==0||equipmentInfo.getModel()==2) {
+                            equipState.setText("大漏失");
+                        }else {
+                            equipState.setText("正常");
+                        }
                         break;
                     case 5:
                         equipState.setText("正常");
                         break;
+                        default:
+                            equipState.setText("正常");
+
+                            break;
+
                 }
             }
         }else {
@@ -387,7 +404,7 @@ public class EquipActivity extends AppCompatActivity implements View.OnClickList
                     {
                         EditText viewById1 = (EditText) inflate.findViewById(R.id.input);
                         String text = viewById1.getText().toString();
-                        if (text==null||text.length()<3){
+                        if (text==null||Integer.parseInt(text)<1){
                             Toast.makeText(getApplicationContext(),"请输入有效数据",Toast.LENGTH_LONG).show();
                             return;
                         }else {

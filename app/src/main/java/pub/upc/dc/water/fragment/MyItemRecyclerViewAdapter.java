@@ -40,7 +40,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         holder.mIdView.setText(mValues.get(position).getEquipId());
         holder.mContentView.setText(String.valueOf(mValues.get(position).getName()));
-        holder.equipWaterUse.setText(String.format("%.1f",mValues.get(position).getWaterUsage()));
+        holder.equipWaterUse.setText(String.format("%.1f",mValues.get(position).getWaterUsage())+"L");
 
         EquipmentInfo equipmentInfo = mValues.get(position);
 

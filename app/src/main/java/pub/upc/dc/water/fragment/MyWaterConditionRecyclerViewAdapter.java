@@ -12,7 +12,7 @@ import pub.upc.dc.water.fragment.WaterConditionFragment.OnListFragmentInteractio
 
 
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.*;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link pub.upc.dc.water.bean.WaterCondition} and makes a call to the
@@ -41,9 +41,9 @@ public class MyWaterConditionRecyclerViewAdapter extends RecyclerView.Adapter<My
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(String.valueOf(mValues.get(position).getWatermeterId()));
-        holder.mContentView.setText(String.valueOf(mValues.get(position).getVolumn()));
-        holder.startTime.setText(simpleDateFormat.format(mValues.get(position).getStartDate()));
-        holder.endTime.setText(simpleDateFormat.format(mValues.get(position).getEndDate()));
+        holder.mContentView.setText(String.valueOf(mValues.get(position).getVolumn()+"L"));
+        holder.startTime.setText(format(mValues.get(position).getStartDate()));
+        holder.endTime.setText(format(mValues.get(position).getEndDate()));
 
 
         holder.timeUse.setText(getTime(mValues.get(position).getTimeUse()));
@@ -58,6 +58,16 @@ public class MyWaterConditionRecyclerViewAdapter extends RecyclerView.Adapter<My
                 }
             }
         });
+    }
+
+    private String format(Date date){
+        Calendar instance = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA);
+        instance.setTimeInMillis(date.getTime()+8*60*60*1000);
+        int year = instance.get(Calendar.YEAR);
+        int month = instance.get(Calendar.MONTH)+1;
+        int hour = instance.get(Calendar.HOUR_OF_DAY);
+        return year+"年"+month+"月"+instance.get(Calendar.DAY_OF_MONTH)+"日"+hour+"时"+
+                instance.get(Calendar.MINUTE)+"分"+instance.get(Calendar.SECOND)+"秒";
     }
 
     private String getTime(Long s){

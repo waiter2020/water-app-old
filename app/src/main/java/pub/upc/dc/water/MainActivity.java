@@ -135,15 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         linearLayout2.setVisibility(View.GONE);
 
-        myItemRecyclerViewAdapter = new MyItemRecyclerViewAdapter(EquipmentInfoContent.getITEMS(), new ItemFragment.OnListFragmentInteractionListener() {
-
-            @Override
-            public void onListFragmentInteraction(EquipmentInfo item) {
-                Toast.makeText(getApplicationContext(), item.getEquipId(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, EquipActivity.class);
-                intent.putExtra("item",item);
-                startActivityForResult(intent,1);
-            }
+        myItemRecyclerViewAdapter = new MyItemRecyclerViewAdapter(EquipmentInfoContent.getITEMS(), item -> {
+            Toast.makeText(getApplicationContext(), item.getEquipId(), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, EquipActivity.class);
+            intent.putExtra("item",item);
+            startActivityForResult(intent,1);
         });
 
 
